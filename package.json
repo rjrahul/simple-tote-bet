@@ -1,0 +1,38 @@
+{
+  "name": "simple-tote-bet",
+  "version": "0.0.1",
+  "description": "A simple tote-betting game",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjrahul/simple-tote-bet.git"
+  },
+  "keywords": [
+    "bet",
+    "betting",
+    "tote-bet"
+  ],
+  "author": "Rahul Jain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rjrahul/simple-tote-bet/issues"
+  },
+  "homepage": "https://github.com/rjrahul/simple-tote-bet#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "guid": "0.0.12",
+    "lodash": "^4.17.4",
+    "restify": "^5.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
+    "sinon": "^2.3.8",
+    "sinon-chai": "^2.12.0",
+    "supertest": "^3.0.0"
+  }
+}
