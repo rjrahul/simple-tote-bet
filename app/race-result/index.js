@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var uuidv4 = require('uuid/v4');
 
 /**
  * A class to store race results
@@ -12,6 +13,7 @@ var _ = require('lodash');
 function RaceResult(results) {
     validate(results);
     this.results = results;
+    this.id = uuidv4();
 }
 
 /**

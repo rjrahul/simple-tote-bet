@@ -23,5 +23,6 @@ describe('Race results', () => {
         expect(result.getFirstPosition()).to.equal('1');
         expect(result.getSecondPosition()).to.equal('2');
         expect(result.getThirdPosition()).to.equal('3');
+        expect(result.id).to.be.ok;
     });
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-var Guid = require('guid');
+var uuidv4 = require('uuid/v4');
 
 /**
  * A class to handle various types of bets.
@@ -13,7 +13,7 @@ function Bet(product, selections, stake) {
     this.product = product;
     this.selections = selections;
     this.stake = stake;
-    this.id = Guid.raw();
+    this.id = uuidv4();
 }
 
 /**

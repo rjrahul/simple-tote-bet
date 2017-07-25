@@ -1,6 +1,6 @@
 'use strict';
 
-var Guid = require('guid');
+var uuidv4 = require('uuid/v4');
 var _ = require('lodash');
 var DividendCalc = require('../dividend-calculator');
 
@@ -16,7 +16,7 @@ function Race(name, date, commissions) {
     this.name = name;
     this.date = date;
     this.commissions = commissions;
-    this.id = Guid.raw();
+    this.id = uuidv4();
     this.concluded = false;
 
     this.betPool = _.transform(commissions, (r, v, k) => {
