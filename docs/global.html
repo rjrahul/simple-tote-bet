@@ -112,6 +112,210 @@
 
 
 <div class="description">
+    This method calculates dividend for Win bets based on RaceResult.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="RaceResult.html">RaceResult</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Result of the race</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bets</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="WinBet.html">WinBet</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of Win Bets</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>commission</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Commission as a string</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Callback function</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dividend-calculator_win-bet-calc.js.html">dividend-calculator/win-bet-calc.js</a>, <a href="dividend-calculator_win-bet-calc.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="calculateDividend"><span class="type-signature"></span>calculateDividend<span class="signature">(result, bets, commission, cb)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
     This method calculates dividend for Place bets based on RaceResult.
 </div>
 
@@ -275,167 +479,6 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="dividend-calculator_place-bet-calc.js.html">dividend-calculator/place-bet-calc.js</a>, <a href="dividend-calculator_place-bet-calc.js.html#line13">line 13</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="calculateDividend"><span class="type-signature"></span>calculateDividend<span class="signature">(race, cb)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    This method calculates dividends for each type of bets and returns an object denoting
-the dividend values.
-
-If successful, it returns an object with key as bet type and value as dividend
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>race</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Race.html">Race</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">An object of concluded race</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>cb</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A callback function</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dividend-calculator_index.js.html">dividend-calculator/index.js</a>, <a href="dividend-calculator_index.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -673,7 +716,7 @@ If successful, it returns an object with key as bet type and value as dividend
     
 
     
-    <h4 class="name" id="calculateDividend"><span class="type-signature"></span>calculateDividend<span class="signature">(result, bets, commission, cb)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="calculateDividend"><span class="type-signature"></span>calculateDividend<span class="signature">(race, cb)</span><span class="type-signature"></span></h4>
     
 
     
@@ -681,7 +724,10 @@ If successful, it returns an object with key as bet type and value as dividend
 
 
 <div class="description">
-    This method calculates dividend for Win bets based on RaceResult.
+    This method calculates dividends for each type of bets and returns an object denoting
+the dividend values.
+
+If successful, it returns an object with key as bet type and value as dividend
 </div>
 
 
@@ -717,13 +763,13 @@ If successful, it returns an object with key as bet type and value as dividend
 
         <tr>
             
-                <td class="name"><code>result</code></td>
+                <td class="name"><code>race</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="RaceResult.html">RaceResult</a></span>
+<span class="param-type"><a href="Race.html">Race</a></span>
 
 
             
@@ -733,53 +779,7 @@ If successful, it returns an object with key as bet type and value as dividend
 
             
 
-            <td class="description last">Result of the race</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bets</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;<a href="WinBet.html">WinBet</a>></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array of Win Bets</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>commission</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Commission as a string</td>
+            <td class="description last">An object of concluded race</td>
         </tr>
 
     
@@ -802,7 +802,7 @@ If successful, it returns an object with key as bet type and value as dividend
 
             
 
-            <td class="description last">Callback function</td>
+            <td class="description last">A callback function</td>
         </tr>
 
     
@@ -843,7 +843,7 @@ If successful, it returns an object with key as bet type and value as dividend
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dividend-calculator_win-bet-calc.js.html">dividend-calculator/win-bet-calc.js</a>, <a href="dividend-calculator_win-bet-calc.js.html#line13">line 13</a>
+        <a href="dividend-calculator_index.js.html">dividend-calculator/index.js</a>, <a href="dividend-calculator_index.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -1467,7 +1467,7 @@ If successful, it returns an object with key as bet type and value as dividend
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="WinBet.html">WinBet</a>></span>
+<span class="param-type">Array.&lt;<a href="ExactaBet.html">ExactaBet</a>></span>
 
 
             
@@ -1477,7 +1477,7 @@ If successful, it returns an object with key as bet type and value as dividend
 
             
 
-            <td class="description last">Array of Win bets</td>
+            <td class="description last">Array of Exacta bets</td>
         </tr>
 
     
@@ -1518,7 +1518,7 @@ If successful, it returns an object with key as bet type and value as dividend
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dividend-calculator_win-bet-calc.js.html">dividend-calculator/win-bet-calc.js</a>, <a href="dividend-calculator_win-bet-calc.js.html#line71">line 71</a>
+        <a href="dividend-calculator_exacta-bet-calc.js.html">dividend-calculator/exacta-bet-calc.js</a>, <a href="dividend-calculator_exacta-bet-calc.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -1624,7 +1624,7 @@ If successful, it returns an object with key as bet type and value as dividend
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="ExactaBet.html">ExactaBet</a>></span>
+<span class="param-type">Array.&lt;<a href="WinBet.html">WinBet</a>></span>
 
 
             
@@ -1634,7 +1634,7 @@ If successful, it returns an object with key as bet type and value as dividend
 
             
 
-            <td class="description last">Array of Exacta bets</td>
+            <td class="description last">Array of Win bets</td>
         </tr>
 
     
@@ -1675,7 +1675,7 @@ If successful, it returns an object with key as bet type and value as dividend
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dividend-calculator_exacta-bet-calc.js.html">dividend-calculator/exacta-bet-calc.js</a>, <a href="dividend-calculator_exacta-bet-calc.js.html#line83">line 83</a>
+        <a href="dividend-calculator_win-bet-calc.js.html">dividend-calculator/win-bet-calc.js</a>, <a href="dividend-calculator_win-bet-calc.js.html#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -2248,6 +2248,257 @@ If successful, it returns an object with key as bet type and value as dividend
     
 
     
+    <h4 class="name" id="determineDividend"><span class="type-signature"></span>determineDividend<span class="signature">(totalPool, firstPositionWinStake, secondPositionWinStake, thirdPositionWinStake, commission)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This method calculates dividend for the Place Bets.
+For calculating place bet dividend, the commissioned pool is divided into 3 equal parts
+each for first, second and third position and then divided based on applied stakes.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>totalPool</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Total stakes</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>firstPositionWinStake</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Winners stakes who won for first position runner</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secondPositionWinStake</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Winners stakes who won for second position runner</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>thirdPositionWinStake</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Winners stakes who won for third position runner</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>commission</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Commission to deduct from total pool</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dividend-calculator_place-bet-calc.js.html">dividend-calculator/place-bet-calc.js</a>, <a href="dividend-calculator_place-bet-calc.js.html#line163">line 163</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Returns the dividend value for Place bets
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="determineDividend"><span class="type-signature"></span>determineDividend<span class="signature">(totalPool, totalWinStake, commission)</span><span class="type-signature"> &rarr; {Number}</span></h4>
     
 
@@ -2654,7 +2905,7 @@ If successful, it returns an object with key as bet type and value as dividend
     
 
     
-    <h4 class="name" id="determineDividend"><span class="type-signature"></span>determineDividend<span class="signature">(totalPool, firstPositionWinStake, secondPositionWinStake, thirdPositionWinStake, commission)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    <h4 class="name" id="isBetWon"><span class="type-signature"></span>isBetWon<span class="signature">(result, bet)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -2662,9 +2913,7 @@ If successful, it returns an object with key as bet type and value as dividend
 
 
 <div class="description">
-    This method calculates dividend for the Place Bets.
-For calculating place bet dividend, the commissioned pool is divided into 3 equal parts
-each for first, second and third position and then divided based on applied stakes.
+    This method determines if the Win Bet has been won or not based on RaceResult.
 </div>
 
 
@@ -2700,13 +2949,13 @@ each for first, second and third position and then divided based on applied stak
 
         <tr>
             
-                <td class="name"><code>totalPool</code></td>
+                <td class="name"><code>result</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type"><a href="RaceResult.html">RaceResult</a></span>
 
 
             
@@ -2716,20 +2965,20 @@ each for first, second and third position and then divided based on applied stak
 
             
 
-            <td class="description last">Total stakes</td>
+            <td class="description last">RaceResult</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>firstPositionWinStake</code></td>
+                <td class="name"><code>bet</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type"><a href="WinBet.html">WinBet</a></span>
 
 
             
@@ -2739,76 +2988,7 @@ each for first, second and third position and then divided based on applied stak
 
             
 
-            <td class="description last">Winners stakes who won for first position runner</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>secondPositionWinStake</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Winners stakes who won for second position runner</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>thirdPositionWinStake</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Winners stakes who won for third position runner</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>commission</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Commission to deduct from total pool</td>
+            <td class="description last">An WinBet object</td>
         </tr>
 
     
@@ -2849,7 +3029,7 @@ each for first, second and third position and then divided based on applied stak
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dividend-calculator_place-bet-calc.js.html">dividend-calculator/place-bet-calc.js</a>, <a href="dividend-calculator_place-bet-calc.js.html#line163">line 163</a>
+        <a href="dividend-calculator_win-bet-calc.js.html">dividend-calculator/win-bet-calc.js</a>, <a href="dividend-calculator_win-bet-calc.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -2876,7 +3056,7 @@ each for first, second and third position and then divided based on applied stak
 
         
 <div class="param-desc">
-    Returns the dividend value for Place bets
+    Whether a bet is won or lost
 </div>
 
 
@@ -2887,7 +3067,7 @@ each for first, second and third position and then divided based on applied stak
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">boolean</span>
 
 
     </dd>
@@ -3030,186 +3210,6 @@ each for first, second and third position and then divided based on applied stak
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="dividend-calculator_exacta-bet-calc.js.html">dividend-calculator/exacta-bet-calc.js</a>, <a href="dividend-calculator_exacta-bet-calc.js.html#line62">line 62</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Whether a bet is won or lost
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="isBetWon"><span class="type-signature"></span>isBetWon<span class="signature">(result, bet)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    This method determines if the Win Bet has been won or not based on RaceResult.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>result</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="RaceResult.html">RaceResult</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">RaceResult</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bet</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="WinBet.html">WinBet</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">An WinBet object</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dividend-calculator_win-bet-calc.js.html">dividend-calculator/win-bet-calc.js</a>, <a href="dividend-calculator_win-bet-calc.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -3986,6 +3986,177 @@ A Place bet is won if the selected runner is either in first, second or third pl
     
 
     
+    <h4 class="name" id="validate"><span class="type-signature"></span>validate<span class="signature">(selections, stake)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Win Bet is placed when a selection for first position
+is specified.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>selections</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Selections should be whole number</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>stake</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stakes for the bet</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="bet_win-bet.js.html">bet/win-bet.js</a>, <a href="bet_win-bet.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc">
+    
+        Throws an Error if invalid data
+    
+    </div>
+
+
+    
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="validate"><span class="type-signature"></span>validate<span class="signature">(result, cb)</span><span class="type-signature"></span></h4>
     
 
@@ -4308,177 +4479,6 @@ A Place bet is won if the selected runner is either in first, second or third pl
     <div class="param-desc">
     
         Throws an Error if data is invalid
-    
-    </div>
-
-
-    
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="validate"><span class="type-signature"></span>validate<span class="signature">(selections, stake)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Place Bet is placed when a selection for first, second or third position
-is specified.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>selections</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Selections should be whole number</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>stake</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stakes for the bet</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bet_place-bet.js.html">bet/place-bet.js</a>, <a href="bet_place-bet.js.html#line27">line 27</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        Throws an Error if invalid data
     
     </div>
 
@@ -4822,7 +4822,7 @@ is specified.
 
 
 <div class="description">
-    Win Bet is placed when a selection for first position
+    Place Bet is placed when a selection for first, second or third position
 is specified.
 </div>
 
@@ -4939,7 +4939,7 @@ is specified.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bet_win-bet.js.html">bet/win-bet.js</a>, <a href="bet_win-bet.js.html#line27">line 27</a>
+        <a href="bet_place-bet.js.html">bet/place-bet.js</a>, <a href="bet_place-bet.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -5166,13 +5166,13 @@ order is specified.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Bet.html">Bet</a></li><li><a href="ExactaBet.html">ExactaBet</a></li><li><a href="Logger.html">Logger</a></li><li><a href="PlaceBet.html">PlaceBet</a></li><li><a href="Race.html">Race</a></li><li><a href="RaceResult.html">RaceResult</a></li><li><a href="WinBet.html">WinBet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calculateDividend">calculateDividend</a></li><li><a href="global.html#calculateFirstPositionStakes">calculateFirstPositionStakes</a></li><li><a href="global.html#calculateSecondPositionStakes">calculateSecondPositionStakes</a></li><li><a href="global.html#calculateThirdPositionStakes">calculateThirdPositionStakes</a></li><li><a href="global.html#calculateTotalPool">calculateTotalPool</a></li><li><a href="global.html#calculateWinStakes">calculateWinStakes</a></li><li><a href="global.html#determineDividend">determineDividend</a></li><li><a href="global.html#isBetWon">isBetWon</a></li><li><a href="global.html#isFirstPositionWin">isFirstPositionWin</a></li><li><a href="global.html#isSecondPositionWin">isSecondPositionWin</a></li><li><a href="global.html#isThirdPositionWin">isThirdPositionWin</a></li><li><a href="global.html#validate">validate</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Bet.html">Bet</a></li><li><a href="ExactaBet.html">ExactaBet</a></li><li><a href="PlaceBet.html">PlaceBet</a></li><li><a href="Race.html">Race</a></li><li><a href="RaceResult.html">RaceResult</a></li><li><a href="WinBet.html">WinBet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calculateDividend">calculateDividend</a></li><li><a href="global.html#calculateFirstPositionStakes">calculateFirstPositionStakes</a></li><li><a href="global.html#calculateSecondPositionStakes">calculateSecondPositionStakes</a></li><li><a href="global.html#calculateThirdPositionStakes">calculateThirdPositionStakes</a></li><li><a href="global.html#calculateTotalPool">calculateTotalPool</a></li><li><a href="global.html#calculateWinStakes">calculateWinStakes</a></li><li><a href="global.html#determineDividend">determineDividend</a></li><li><a href="global.html#isBetWon">isBetWon</a></li><li><a href="global.html#isFirstPositionWin">isFirstPositionWin</a></li><li><a href="global.html#isSecondPositionWin">isSecondPositionWin</a></li><li><a href="global.html#isThirdPositionWin">isThirdPositionWin</a></li><li><a href="global.html#validate">validate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 26 2017 14:11:07 GMT+0530 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 26 2017 14:26:07 GMT+0530 (IST)
 </footer>
 
 <script> prettyPrint(); </script>
