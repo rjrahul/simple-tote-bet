@@ -2,9 +2,9 @@
 
 var Bet = require('../../app/bet');
 var PlaceBetCalc = require('../../app/dividend-calculator/place-bet-calc');
-var util = require('util');
-var DividendCalc = util.promisify(PlaceBetCalc.calculateDividend);
-var createBet = util.promisify(Bet.create);
+var Promise = require('bluebird');
+var DividendCalc = Promise.promisify(PlaceBetCalc.calculateDividend);
+var createBet = Promise.promisify(Bet.create);
 var RaceResult = require('../../app/race-result');
 
 describe('PlaceBet Dividend Calculator', () => {

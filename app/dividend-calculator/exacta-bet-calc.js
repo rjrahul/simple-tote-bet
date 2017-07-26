@@ -87,8 +87,6 @@ function determineDividend(result, commissionedPool, bets) {
         return isBetWon(result, bet) ? winStake + bet.stake : winStake;
     }, 0);
 
-    console.log(commissionedPool, totalWinStake);
-
     return _.floor(commissionedPool / (totalWinStake || 1), 2);
 }
 

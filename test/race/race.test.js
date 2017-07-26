@@ -1,6 +1,6 @@
 'use strict';
 
-var util = require('util');
+var Promise = require('bluebird');
 var Race = require('../../app/race');
 var Bet = require('../../app/bet');
 var RaceResult = require('../../app/race-result');
@@ -18,9 +18,9 @@ describe('Race', () => {
 
     it('should be able to apply a bet to the race', () => {
         var race = new Race('Apply 1 bet', '2017-07-24', TestCommissions);
-        var createBet = util.promisify(Bet.create);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedBetsOfType = util.promisify(race.betsOfType);
+        var createBet = Promise.promisify(Bet.create);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedBetsOfType = Promise.promisify(race.betsOfType);
         var bet;
         return createBet('W', '2', '3')
             .then((newBet) => {
@@ -36,9 +36,9 @@ describe('Race', () => {
 
     it('should be able to apply multiple bets to the race', () => {
         var race = new Race('Apply multiple bets', '2017-07-24', TestCommissions);
-        var createBet = util.promisify(Bet.create);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedBetsOfType = util.promisify(race.betsOfType);
+        var createBet = Promise.promisify(Bet.create);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedBetsOfType = Promise.promisify(race.betsOfType);
         var betW;
         var betP;
         return createBet('W', '2', '3')
@@ -67,10 +67,10 @@ describe('Race', () => {
 
     it('should be able to conclude the race', () => {
         var race = new Race('Conclude race', '2017-07-24', TestCommissions);
-        var createBet = util.promisify(Bet.create);
+        var createBet = Promise.promisify(Bet.create);
         var result = new RaceResult(['1', '2', '3']);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedConclude = util.promisify(race.conclude);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedConclude = Promise.promisify(race.conclude);
         return createBet('W', '2', '3')
             .then((newBet) => {
                 return race.promisifiedApplyBet(newBet);
@@ -83,10 +83,10 @@ describe('Race', () => {
 
     it('should not be able to conclude the race more than once', () => {
         var race = new Race('Conclude more than once', '2017-07-24', TestCommissions);
-        var createBet = util.promisify(Bet.create);
+        var createBet = Promise.promisify(Bet.create);
         var result = new RaceResult(['1', '2', '3']);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedConclude = util.promisify(race.conclude);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedConclude = Promise.promisify(race.conclude);
         return createBet('W', '2', '3')
             .then((newBet) => {
                 return race.promisifiedApplyBet(newBet);
@@ -105,10 +105,10 @@ describe('Race', () => {
 
     it('should not be able to apply bet on concluded race', () => {
         var race = new Race('Conclude and bet', '2017-07-24', TestCommissions);
-        var createBet = util.promisify(Bet.create);
+        var createBet = Promise.promisify(Bet.create);
         var result = new RaceResult(['1', '2', '3']);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedConclude = util.promisify(race.conclude);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedConclude = Promise.promisify(race.conclude);
         return createBet('W', '2', '3')
             .then((newBet) => {
                 return race.promisifiedApplyBet(newBet);

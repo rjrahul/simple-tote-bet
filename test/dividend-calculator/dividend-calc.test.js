@@ -2,10 +2,10 @@
 
 var _ = require('lodash');
 var Bet = require('../../app/bet');
-var util = require('util');
+var Promise = require('bluebird');
 var DividendCalc = require('../../app/dividend-calculator');
-DividendCalc = util.promisify(DividendCalc.calculateDividend);
-var createBet = util.promisify(Bet.create);
+DividendCalc = Promise.promisify(DividendCalc.calculateDividend);
+var createBet = Promise.promisify(Bet.create);
 var RaceResult = require('../../app/race-result');
 var Race = require('../../app/race');
 var WinBetCalc = require('../../app/dividend-calculator/win-bet-calc');
@@ -31,8 +31,8 @@ describe('Dividend Calculator', () => {
     
     it('should calculate correct dividend based on bets applied', () => {
         var race = new Race('Final race', '2017-07-24', TestCommissions);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedConclude = util.promisify(race.conclude);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedConclude = Promise.promisify(race.conclude);
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
         return createBet('W', '2', '2')
@@ -111,8 +111,8 @@ describe('Dividend Calculator', () => {
     
     it('should validate error handling in calculate dividend', () => {
         var race = new Race('Error race', '2017-07-24', TestCommissions);
-        race.promisifiedApplyBet = util.promisify(race.applyBet);
-        race.promisifiedConclude = util.promisify(race.conclude);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedConclude = Promise.promisify(race.conclude);
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
         var stub = sinon.stub(WinBetCalc, 'calculateDividend').callsFake(function() {

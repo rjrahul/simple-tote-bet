@@ -2,9 +2,9 @@
 
 var Bet = require('../../app/bet');
 var ExactaBetCalc = require('../../app/dividend-calculator/exacta-bet-calc');
-var util = require('util');
-var DividendCalc = util.promisify(ExactaBetCalc.calculateDividend);
-var createBet = util.promisify(Bet.create);
+var Promise = require('bluebird');
+var DividendCalc = Promise.promisify(ExactaBetCalc.calculateDividend);
+var createBet = Promise.promisify(Bet.create);
 var RaceResult = require('../../app/race-result');
 
 describe('ExactaBet Dividend Calculator', () => {

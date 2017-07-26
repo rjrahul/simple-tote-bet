@@ -2,9 +2,9 @@
 
 var Bet = require('../../app/bet');
 var WinBetCalc = require('../../app/dividend-calculator/win-bet-calc');
-var util = require('util');
-var DividendCalc = util.promisify(WinBetCalc.calculateDividend);
-var createBet = util.promisify(Bet.create);
+var Promise = require('bluebird');
+var DividendCalc = Promise.promisify(WinBetCalc.calculateDividend);
+var createBet = Promise.promisify(Bet.create);
 var RaceResult = require('../../app/race-result');
 
 describe('WinBet Dividend Calculator', () => {
