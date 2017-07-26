@@ -23,44 +23,81 @@ function calculateDividend(result, bets, commission, cb) {
         cb = commission;
         commission = '0';
     }
-    validate(result, bets, (err) => {
+    validate(result, (err) => {
         if(err) {
             return cb(err);
         }
         
-        var winPool = calculateWinPool(result, bets);
-        var commissionedPool = winPool * (1 - commission);
+        if(!bets || !Array.isArray(bets) || !bets.length) {
+            return cb(null, [0, 0, 0]);
+        }
 
-        cb(null, determineDividend(result, commissionedPool, bets));
+        var totalPool = calculateTotalPool(bets);
+        var firstPositionStakes = calculateFirstPositionStakes(result, bets);
+        var secondPositionStakes = calculateSecondPositionStakes(result, bets);
+        var thirdPositionStakes = calculateThirdPositionStakes(result, bets);
+
+        cb(null, determineDividend(totalPool, firstPositionStakes, secondPositionStakes, thirdPositionStakes, commission));
     });
 }
 
 /**
  * It validates the parameters
  * @param {RaceResult} result - RaceResult object
- * @param {PlaceBet[]} bets - Array of Place bets
  * @param {function} cb - Callback function
  * @throws Throws an Error if data is invalid
  */
-function validate(result, bets, cb) {
+function validate(result, cb) {
     if(!result) {
         return cb(new Error('RaceResult is mandatory'));
-    }
-    if(!bets || !Array.isArray(bets) || !bets.length) {
-        return cb(new Error('Bets should be an array of minimum 1 PlaceBet'));
     }
     cb();
 }
 
 /**
- * This method determines the win pool total for place bets
+ * This method determines the total bet pool
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateTotalPool(bets) {
+    return bets.reduce((totalPool, bet) => {
+        return totalPool + bet.stake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes for first position runner winners
  * @param {RaceResult} result - RaceResult
  * @param {PlaceBet[]} bets - Array of Place bets
  * @returns {Number} Total dollars in the win pool
  */
-function calculateWinPool(result, bets) {
-    return bets.reduce((winPool, bet) => {
-        return !isBetWon(result, bet) ? winPool + bet.stake : winPool;
+function calculateFirstPositionStakes(result, bets) {
+    return bets.reduce((winStake, bet) => {
+        return isFirstPositionWin(result, bet) ? winStake + bet.stake : winStake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes for second position runner winners
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateSecondPositionStakes(result, bets) {
+    return bets.reduce((winStake, bet) => {
+        return isSecondPositionWin(result, bet) ? winStake + bet.stake : winStake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes for third position runner winners
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateThirdPositionStakes(result, bets) {
+    return bets.reduce((winStake, bet) => {
+        return isThirdPositionWin(result, bet) ? winStake + bet.stake : winStake;
     }, 0);
 }
 
@@ -113,33 +150,25 @@ function isThirdPositionWin(result, bet) {
 
 /**
  * This method calculates dividend for the Place Bets.
- * For calculating place bet dividend the commissioned pool is divided into 3 equal parts
+ * For calculating place bet dividend, the commissioned pool is divided into 3 equal parts
  * each for first, second and third position and then divided based on applied stakes.
  * 
- * @param {RaceResult} result - RaceResult
- * @param {string} commissionedPool - Total win pool after deducting commission
- * @param {PlaceBet[]} bets - Array of Place bets
+ * @param {Number} totalPool - Total stakes
+ * @param {Number} firstPositionWinStake - Winners stakes who won for first position runner
+ * @param {Number} secondPositionWinStake - Winners stakes who won for second position runner
+ * @param {Number} thirdPositionWinStake - Winners stakes who won for third position runner
+ * @param {string} commission - Commission to deduct from total pool
  * @returns {Number} Returns the dividend value for Place bets
  */
-function determineDividend(result, commissionedPool, bets) {
-    var firstPositionStake = bets.reduce((winStake, bet) => {
-        return isFirstPositionWin(result, bet) ? winStake + bet.stake : winStake;
-    }, 0);
-
-    var secondPositionStake = bets.reduce((winStake, bet) => {
-        return isSecondPositionWin(result, bet) ? winStake + bet.stake : winStake;
-    }, 0);
-
-    var thirdPositionStake = bets.reduce((winStake, bet) => {
-        return isThirdPositionWin(result, bet) ? winStake + bet.stake : winStake;
-    }, 0);
+function determineDividend(totalPool, firstPositionWinStake, secondPositionWinStake, thirdPositionWinStake, commission) {
+    var commissionedPool = totalPool * (1 - commission);
 
     var winPool = commissionedPool / 3;
 
     return [
-        _.floor(winPool / (firstPositionStake || 1), 2), 
-        _.floor(winPool / (secondPositionStake || 1), 2), 
-        _.floor(winPool / (thirdPositionStake || 1), 2)
+        firstPositionWinStake ? _.round(winPool / firstPositionWinStake, 2) : 0, 
+        secondPositionWinStake ? _.round(winPool / secondPositionWinStake, 2) : 0, 
+        thirdPositionWinStake ? _.round(winPool / thirdPositionWinStake, 2) : 0
     ];
 }
 

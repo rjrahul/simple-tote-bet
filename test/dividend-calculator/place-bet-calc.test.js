@@ -16,35 +16,24 @@ describe('PlaceBet Dividend Calculator', () => {
                 expect(e.message).to.equal('RaceResult is mandatory');
             });
     });
-    it('should mandate bets array', () => {
-        var result = new RaceResult(['1', '2', '3']);
-        return DividendCalc(result)
-            .then(() => {
-                throw new Error('should not be here');
-            }).catch((e) => {
-                expect(e.message).to.equal('Bets should be an array of minimum 1 PlaceBet');
-            });
-    });
-    it('should mandate bets when not array', () => {
-        var result = new RaceResult(['1', '2', '3']);
-        return DividendCalc(result, 'a')
-            .then(() => {
-                throw new Error('should not be here');
-            }).catch((e) => {
-                expect(e.message).to.equal('Bets should be an array of minimum 1 PlaceBet');
-            });
-    });
-    it('should mandate bets when array of length 0', () => {
+    it('should pay 0 dividend each if there are no bets', () => {
         var result = new RaceResult(['1', '2', '3']);
         return DividendCalc(result, [])
-            .then(() => {
-                throw new Error('should not be here');
-            }).catch((e) => {
-                expect(e.message).to.equal('Bets should be an array of minimum 1 PlaceBet');
+            .then((dividend) => {
+                expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
+                expect(dividend).to.deep.equal([0, 0, 0]);
+            });
+    });
+    it('should pay 0 dividend each if no bets array is specified', () => {
+        var result = new RaceResult(['1', '2', '3']);
+        return DividendCalc(result)
+            .then((dividend) => {
+                expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
+                expect(dividend).to.deep.equal([0, 0, 0]);
             });
     });
 
-    it('should pay 0 dividend for only winning bet of first position', () => {
+    it('should pay correct dividend for only winning bet of first position', () => {
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
         return createBet('P', '1', '2')
@@ -53,11 +42,11 @@ describe('PlaceBet Dividend Calculator', () => {
                 return DividendCalc(result, bets);
             }).then((dividend) => {
                 expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
-                expect(dividend).to.deep.equal([0, 0, 0]);
+                expect(dividend).to.deep.equal([0.33, 0, 0]);
             });
     });
 
-    it('should pay 0 dividend for only winning bet of second position', () => {
+    it('should pay correct dividend for only winning bet of second position', () => {
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
         return createBet('P', '2', '2')
@@ -66,11 +55,11 @@ describe('PlaceBet Dividend Calculator', () => {
                 return DividendCalc(result, bets);
             }).then((dividend) => {
                 expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
-                expect(dividend).to.deep.equal([0, 0, 0]);
+                expect(dividend).to.deep.equal([0, 0.33, 0]);
             });
     });
 
-    it('should pay 0 dividend for only winning bet of third position', () => {
+    it('should pay correct dividend for only winning bet of third position', () => {
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
         return createBet('P', '3', '2')
@@ -79,11 +68,11 @@ describe('PlaceBet Dividend Calculator', () => {
                 return DividendCalc(result, bets);
             }).then((dividend) => {
                 expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
-                expect(dividend).to.deep.equal([0, 0, 0]);
+                expect(dividend).to.deep.equal([0, 0, 0.33]);
             });
     });
 
-    it('should pay full dividend for only losing bet', () => {
+    it('should pay 0 dividend for only losing bet', () => {
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
         return createBet('P', '4', '3')
@@ -92,42 +81,66 @@ describe('PlaceBet Dividend Calculator', () => {
                 return DividendCalc(result, bets);
             }).then((dividend) => {
                 expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
-                expect(dividend).to.deep.equal([1, 1, 1]);
+                expect(dividend).to.deep.equal([0, 0, 0]);
             });
     });
 
     it('should pay dividend after accepting commission', () => {
         var result = new RaceResult(['1', '2', '3']);
         var bets = [];
-        return createBet('P', '4', '4')
+        return createBet('P', '1', '4')
             .then((bet) => {
                 bets.push(bet);
-                return DividendCalc(result, bets, '0.25');
+                return DividendCalc(result, bets, '0.12');
             }).then((dividend) => {
                 expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
-                expect(dividend).to.deep.equal([1, 1, 1]);
+                expect(dividend).to.deep.equal([0.29, 0, 0]);
             });
     });
 
     it('should pay appropriated dividend', () => {
-        var result = new RaceResult(['1', '2', '3']);
+        var result = new RaceResult(['2', '3', '1']);
         var bets = [];
-        return createBet('P', '4', '5')
+        return createBet('P', '1', '31')
             .then((bet) => {
                 bets.push(bet);
-                return createBet('P', '1', '3');
+                return createBet('P', '2', '89');
             }).then((bet) => {
                 bets.push(bet);
-                return createBet('P', '1', '2');
+                return createBet('P', '3', '28');
             }).then((bet) => {
                 bets.push(bet);
-                return createBet('P', '2', '2');
+                return createBet('P', '4', '72');
             }).then((bet) => {
                 bets.push(bet);
-                return DividendCalc(result, bets, '0.1');
+                return createBet('P', '1', '40');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '2', '16');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '3', '82');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '4', '52');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '1', '18');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '2', '74');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '3', '39');
+            }).then((bet) => {
+                bets.push(bet);
+                return createBet('P', '4', '105');
+            }).then((bet) => {
+                bets.push(bet);
+                return DividendCalc(result, bets, '0.12');
             }).then((dividend) => {
                 expect(dividend).to.be.an.instanceOf(Array).with.lengthOf(3);
-                expect(dividend).to.deep.equal([1.5/5, 1.5/2, 1.5]);
+                expect(dividend).to.deep.equal([1.06, 1.27, 2.13]);
             });
     });
 });

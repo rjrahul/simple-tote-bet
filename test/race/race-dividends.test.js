@@ -92,24 +92,24 @@ describe('Race dividend tests', () => {
             }).then(() => {
                 return race.promisifiedCalculateDividend();
             }).then((dividend) => {
-                var PWinPool = (14 * (1 - TestCommissions.P)) / 3;
+                var PWinPool = (30 * (1 - TestCommissions.P)) / 3;
                 var expectedDividend = {
                     'W': {
                         'runner': '1', 
-                        'dividend': _.floor((2 * (1 - TestCommissions.W)) / 5, 2)},
+                        'dividend': _.round((7 * (1 - TestCommissions.W)) / 5, 2)},
                     'P': [{
                         'runner': '1',
-                        'dividend': _.floor(PWinPool / 5, 2)
+                        'dividend': _.round(PWinPool / 5, 2)
                     }, {
                         'runner': '2',
-                        'dividend': _.floor(PWinPool / 4, 2)
+                        'dividend': _.round(PWinPool / 4, 2)
                     }, {
                         'runner': '3',
-                        'dividend': _.floor(PWinPool / 7, 2)
+                        'dividend': _.round(PWinPool / 7, 2)
                     }],
                     'E': {
                         'runner': '1,2',
-                        'dividend': _.floor((3 * (1 - TestCommissions.E)) / 5, 2)
+                        'dividend': _.round((8 * (1 - TestCommissions.E)) / 5, 2)
                     }
                 };
                 expect(dividend).to.deep.equal(expectedDividend);

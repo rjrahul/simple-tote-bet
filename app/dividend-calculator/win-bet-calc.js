@@ -23,31 +23,31 @@ function calculateDividend(result, bets, commission, cb) {
         cb = commission;
         commission = '0';
     }
-    validate(result, bets, (err) => {
+    validate(result, (err) => {
         if(err) {
             return cb(err);
         }
         
-        var winPool = calculateWinPool(result, bets);
-        var commissionedPool = winPool * (1 - commission);
+        if(!bets || !Array.isArray(bets) || !bets.length) {
+            return cb(null, 0);
+        }
 
-        cb(null, determineDividend(result, commissionedPool, bets));
+        var totalPool = calculateTotalPool(bets);
+        var winStakes = calculateWinStakes(result, bets);
+
+        cb(null, determineDividend(totalPool, winStakes, commission));
     });
 }
 
 /**
  * It validates the parameters
  * @param {RaceResult} result - RaceResult object
- * @param {WinBet[]} bets - Array of Win bets
  * @param {function} cb - Callback function
  * @throws Throws an Error if data is invalid
  */
-function validate(result, bets, cb) {
+function validate(result, cb) {
     if(!result) {
         return cb(new Error('RaceResult is mandatory'));
-    }
-    if(!bets || !Array.isArray(bets) || !bets.length) {
-        return cb(new Error('Bets should be an array of minimum 1 WinBet'));
     }
     cb();
 }
@@ -64,30 +64,39 @@ function isBetWon(result, bet) {
 }
 
 /**
- * This method determines the win pool total for Win bets
+ * This method determines the total bet pool
+ * @param {WinBet[]} bets - Array of Win bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateTotalPool(bets) {
+    return bets.reduce((totalPool, bet) => {
+        return totalPool + bet.stake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes total for win bets
  * @param {RaceResult} result - RaceResult
  * @param {WinBet[]} bets - Array of Win bets
  * @returns {Number} Total dollars in the win pool
  */
-function calculateWinPool(result, bets) {
-    return bets.reduce((winPool, bet) => {
-        return !isBetWon(result, bet) ? winPool + bet.stake : winPool;
+function calculateWinStakes(result, bets) {
+    return bets.reduce((winStakes, bet) => {
+        return isBetWon(result, bet) ? winStakes + bet.stake : winStakes;
     }, 0);
 }
 
 /**
  * This method calculates dividend for the Win Bets
- * @param {RaceResult} result - RaceResult
- * @param {string} commissionedPool - Total win pool after deducting commission
- * @param {WinBet[]} bets - Array of Win bets
+ * @param {Number} totalPool - Total stakes
+ * @param {Number} totalWinStake - Winners stakes
+ * @param {string} commission - Commission to deduct from total pool
  * @returns {Number} Returns the dividend value for Win bets
  */
-function determineDividend(result, commissionedPool, bets) {
-    var totalWinStake = bets.reduce((winStake, bet) => {
-        return isBetWon(result, bet) ? winStake + bet.stake : winStake;
-    }, 0);
+function determineDividend(totalPool, totalWinStake, commission) {
+    var commissionedPool = totalPool * (1 - commission);
 
-    return _.floor(commissionedPool / (totalWinStake || 1), 2);
+    return totalWinStake ? _.round(commissionedPool / totalWinStake, 2) : 0;
 }
 
 module.exports.calculateDividend = calculateDividend;

@@ -33,7 +33,7 @@ Race.prototype.applyBet = function(bet, cb) {
     if(this.concluded) {
         return cb(new Error('Race already concluded'));
     }
-    this.betPool[bet.product].push(bet);
+    (this.betPool[bet.product] || (this.betPool[bet.product] = [])).push(bet);
     cb();
 };
 

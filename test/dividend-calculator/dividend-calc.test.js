@@ -99,11 +99,11 @@ describe('Dividend Calculator', () => {
             }).then(() => {
                 return DividendCalc(race);
             }).then((dividend) => {
-                var PWinPool = (14 * (1 - TestCommissions.P)) / 3;
+                var PWinPool = (30 * (1 - TestCommissions.P)) / 3;
                 var expectedDividend = {
-                    'W': _.floor((2 * (1 - TestCommissions.W)) / 5, 2),
-                    'P': [_.floor(PWinPool / 5, 2), _.floor(PWinPool / 4, 2), _.floor(PWinPool / 7, 2)],
-                    'E': _.floor((3 * (1 - TestCommissions.E)) / 5, 2)
+                    'W': _.round((7 * (1 - TestCommissions.W)) / 5, 2),
+                    'P': [_.round(PWinPool / 5, 2), _.round(PWinPool / 4, 2), _.round(PWinPool / 7, 2)],
+                    'E': _.round((8 * (1 - TestCommissions.E)) / 5, 2)
                 };
                 expect(dividend).to.deep.equal(expectedDividend);
             });
@@ -131,6 +131,30 @@ describe('Dividend Calculator', () => {
             }).catch((e) => {
                 expect(e.message).to.equal('A dummy error');
                 WinBetCalc.calculateDividend.restore();
+            });
+    });
+
+    it('should calculate dividend when only 1 bet type is provided', () => {
+        var race = new Race('Error race', '2017-07-24', TestCommissions);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedConclude = Promise.promisify(race.conclude);
+        var result = new RaceResult(['1', '2', '3']);
+        var bets = [];
+
+        return createBet('W', '1', '2')
+            .then((bet) => {
+                return race.promisifiedApplyBet(bet);
+            }).then(() => {
+                return race.promisifiedConclude(result);
+            }).then(() => {
+                return DividendCalc(race);
+            }).then((dividend) => {
+                var expectedDividend = {
+                    'W': _.round((2 * (1 - TestCommissions.W)) / 2, 2),
+                    'P': [0, 0, 0],
+                    'E': 0
+                };
+                expect(dividend).to.deep.equal(expectedDividend);
             });
     });
 });

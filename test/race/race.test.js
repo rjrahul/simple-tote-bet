@@ -34,6 +34,24 @@ describe('Race', () => {
             });
     });
 
+    it('should be able to apply a bet to the race even if commission object does not conatin bet type', () => {
+        var race = new Race('Apply 1 bet', '2017-07-24', {'P': '0.12', 'E': '0.18'});
+        var createBet = Promise.promisify(Bet.create);
+        race.promisifiedApplyBet = Promise.promisify(race.applyBet);
+        race.promisifiedBetsOfType = Promise.promisify(race.betsOfType);
+        var bet;
+        return createBet('W', '2', '3')
+            .then((newBet) => {
+                bet = newBet;
+                return race.promisifiedApplyBet(newBet);
+            }).then(() => {
+                return race.promisifiedBetsOfType('W');
+            }).then((betsTypeW) => {
+                expect(betsTypeW.length).to.equal(1);
+                expect(betsTypeW[0]).to.equal(bet);
+            });
+    });
+
     it('should be able to apply multiple bets to the race', () => {
         var race = new Race('Apply multiple bets', '2017-07-24', TestCommissions);
         var createBet = Promise.promisify(Bet.create);
