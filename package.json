@@ -4,7 +4,8 @@
   "description": "A simple tote-betting game",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha"
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha",
+    "start": "node . -i"
   },
   "repository": {
     "type": "git",
