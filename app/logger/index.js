@@ -2,7 +2,7 @@
 
 /**
  * A basic logger function for printing to console.
- * @Constructor
+ * @constructor
  */
 function Logger() {}
 

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dividend-calculator/place-bet-calc.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dividend-calculator/place-bet-calc.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+var _ = require('lodash');
+
+/**
+ * This method calculates dividend for Place bets based on RaceResult.
+ * 
+ * @param {RaceResult} result - Result of the race
+ * @param {PlaceBet[]} bets - Array of Place Bets
+ * @param {string} commission - Commission as a string
+ * @param {function} cb - Callback function
+ */
+function calculateDividend(result, bets, commission, cb) {
+    if(typeof result === 'function') {
+        cb = result;
+        result = null;
+    }
+    if(typeof bets === 'function') {
+        cb = bets;
+        bets = null;
+    }
+    if(typeof commission === 'function') {
+        cb = commission;
+        commission = '0';
+    }
+    validate(result, (err) => {
+        if(err) {
+            return cb(err);
+        }
+        
+        if(!bets || !Array.isArray(bets) || !bets.length) {
+            return cb(null, [0, 0, 0]);
+        }
+
+        var totalPool = calculateTotalPool(bets);
+        var firstPositionStakes = calculateFirstPositionStakes(result, bets);
+        var secondPositionStakes = calculateSecondPositionStakes(result, bets);
+        var thirdPositionStakes = calculateThirdPositionStakes(result, bets);
+
+        cb(null, determineDividend(totalPool, firstPositionStakes, secondPositionStakes, thirdPositionStakes, commission));
+    });
+}
+
+/**
+ * It validates the parameters
+ * @param {RaceResult} result - RaceResult object
+ * @param {function} cb - Callback function
+ * @throws Throws an Error if data is invalid
+ */
+function validate(result, cb) {
+    if(!result) {
+        return cb(new Error('RaceResult is mandatory'));
+    }
+    cb();
+}
+
+/**
+ * This method determines the total bet pool
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateTotalPool(bets) {
+    return bets.reduce((totalPool, bet) => {
+        return totalPool + bet.stake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes for first position runner winners
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateFirstPositionStakes(result, bets) {
+    return bets.reduce((winStake, bet) => {
+        return isFirstPositionWin(result, bet) ? winStake + bet.stake : winStake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes for second position runner winners
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateSecondPositionStakes(result, bets) {
+    return bets.reduce((winStake, bet) => {
+        return isSecondPositionWin(result, bet) ? winStake + bet.stake : winStake;
+    }, 0);
+}
+
+/**
+ * This method determines the win stakes for third position runner winners
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet[]} bets - Array of Place bets
+ * @returns {Number} Total dollars in the win pool
+ */
+function calculateThirdPositionStakes(result, bets) {
+    return bets.reduce((winStake, bet) => {
+        return isThirdPositionWin(result, bet) ? winStake + bet.stake : winStake;
+    }, 0);
+}
+
+/**
+ * This method determines if the Place Bet has been won or not based on RaceResult.
+ * A Place bet is won if the selected runner is either in first, second or third place.
+ * 
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet} bet - An PlaceBet object
+ * @returns {boolean} Whether a bet is won or lost
+ */
+function isBetWon(result, bet) {
+    return isFirstPositionWin(result, bet)
+            || isSecondPositionWin(result, bet)
+            || isThirdPositionWin(result, bet);
+}
+
+/**
+ * This method determines if the Place Bet has been won for first place.
+ * 
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet} bet - An PlaceBet object
+ * @returns {boolean} Whether a bet is won or lost
+ */
+function isFirstPositionWin(result, bet) {
+    return result.getFirstPosition() === bet.selections; 
+}
+
+/**
+ * This method determines if the Place Bet has been won for second place.
+ * 
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet} bet - An PlaceBet object
+ * @returns {boolean} Whether a bet is won or lost
+ */
+function isSecondPositionWin(result, bet) {
+    return result.getSecondPosition() === bet.selections;
+}
+
+/**
+ * This method determines if the Place Bet has been won for third place.
+ * 
+ * @param {RaceResult} result - RaceResult
+ * @param {PlaceBet} bet - An PlaceBet object
+ * @returns {boolean} Whether a bet is won or lost
+ */
+function isThirdPositionWin(result, bet) {
+    return result.getThirdPosition() === bet.selections;
+}
+
+/**
+ * This method calculates dividend for the Place Bets.
+ * For calculating place bet dividend, the commissioned pool is divided into 3 equal parts
+ * each for first, second and third position and then divided based on applied stakes.
+ * 
+ * @param {Number} totalPool - Total stakes
+ * @param {Number} firstPositionWinStake - Winners stakes who won for first position runner
+ * @param {Number} secondPositionWinStake - Winners stakes who won for second position runner
+ * @param {Number} thirdPositionWinStake - Winners stakes who won for third position runner
+ * @param {string} commission - Commission to deduct from total pool
+ * @returns {Number} Returns the dividend value for Place bets
+ */
+function determineDividend(totalPool, firstPositionWinStake, secondPositionWinStake, thirdPositionWinStake, commission) {
+    var commissionedPool = totalPool * (1 - commission);
+
+    var winPool = commissionedPool / 3;
+
+    return [
+        firstPositionWinStake ? _.round(winPool / firstPositionWinStake, 2) : 0, 
+        secondPositionWinStake ? _.round(winPool / secondPositionWinStake, 2) : 0, 
+        thirdPositionWinStake ? _.round(winPool / thirdPositionWinStake, 2) : 0
+    ];
+}
+
+module.exports.calculateDividend = calculateDividend;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Bet.html">Bet</a></li><li><a href="ExactaBet.html">ExactaBet</a></li><li><a href="Logger.html">Logger</a></li><li><a href="PlaceBet.html">PlaceBet</a></li><li><a href="Race.html">Race</a></li><li><a href="RaceResult.html">RaceResult</a></li><li><a href="WinBet.html">WinBet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calculateDividend">calculateDividend</a></li><li><a href="global.html#calculateFirstPositionStakes">calculateFirstPositionStakes</a></li><li><a href="global.html#calculateSecondPositionStakes">calculateSecondPositionStakes</a></li><li><a href="global.html#calculateThirdPositionStakes">calculateThirdPositionStakes</a></li><li><a href="global.html#calculateTotalPool">calculateTotalPool</a></li><li><a href="global.html#calculateWinStakes">calculateWinStakes</a></li><li><a href="global.html#determineDividend">determineDividend</a></li><li><a href="global.html#isBetWon">isBetWon</a></li><li><a href="global.html#isFirstPositionWin">isFirstPositionWin</a></li><li><a href="global.html#isSecondPositionWin">isSecondPositionWin</a></li><li><a href="global.html#isThirdPositionWin">isThirdPositionWin</a></li><li><a href="global.html#validate">validate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 26 2017 14:11:07 GMT+0530 (IST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

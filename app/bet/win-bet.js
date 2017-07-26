@@ -6,6 +6,7 @@ var util = require('util');
 /**
  * A class to handle Win bets
  * 
+ * @constructor
  * @param {string} selections 
  * @param {string} stake 
  * @throws Throws an Error if invalid data

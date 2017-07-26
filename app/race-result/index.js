@@ -6,6 +6,7 @@ var uuidv4 = require('uuid/v4');
 /**
  * A class to store race results
  * 
+ * @constructor
  * @param {string[]} results - Results of the race in ordered fashion 
  *                              with 0th index denoting first position
  * @throws Throws an exception if data is invalid
