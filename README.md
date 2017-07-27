@@ -50,7 +50,8 @@ Race result is specified as follows. Once entered race is considered finished an
 > `Result:<first>:<second>:<third>`
 
 **For example**
-`Result:5:3:8` specified horse `5`, `3` and `8` have won first, second and third position respectively
+
+`Result:5:3:8` specifies horse `5`, `3` and `8` have won first, second and third position respectively
 
 # Output
 Output dividends are shown on screen in following format
