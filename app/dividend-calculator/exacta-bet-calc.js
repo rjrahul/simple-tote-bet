@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var validate = require('./validator');
 
 /**
  * This method calculates dividend for Exacta bets based on RaceResult.
@@ -37,19 +38,6 @@ function calculateDividend(result, bets, commission, cb) {
 
         cb(null, determineDividend(totalPool, winStakes, commission));
     });
-}
-
-/**
- * It validates the parameters
- * @param {RaceResult} result - RaceResult object
- * @param {function} cb - Callback function
- * @throws Throws an Error if data is invalid
- */
-function validate(result, cb) {
-    if(!result) {
-        return cb(new Error('RaceResult is mandatory'));
-    }
-    cb();
 }
 
 /**

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: race-result/index.js</title>
+    <title>JSDoc: Source: dividend-calculator/validator.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: race-result/index.js</h1>
+    <h1 class="page-title">Source: dividend-calculator/validator.js</h1>
 
     
 
@@ -28,70 +28,21 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-var _ = require('lodash');
-var uuidv4 = require('uuid/v4');
-
 /**
- * A class to store race results
- * 
- * @constructor
- * @param {string[]} results - Results of the race in ordered fashion 
- *                              with 0th index denoting first position
- * @throws Throws an exception if data is invalid
+ * It validates the parameters. Currently, only validation done is for Race result to be mandatory
+ * @param {RaceResult} result - RaceResult object
+ * @param {Bet[]} bets - Array of bets
+ * @param {string} commission - Commission for the bet 
+ * @param {function} cb - Callback function
  */
-function RaceResult(results) {
-    validate(results);
-    this.results = results;
-    this.id = uuidv4();
+function validate(result, bets, commission, cb) {
+    if(!result) {
+        return cb(new Error('RaceResult is mandatory'));
+    }
+    cb();
 }
 
-/**
- * Validates that race result is an unique array of minimum 3 whole numbers
- * 
- * @param {string[]} results - Race results to validate
- * @throws Throws an exception if invalid
- */
-function validate(results) {
-    if(!Array.isArray(results)) {
-        throw new Error('Results are mandatory to be an array of whole numbers');
-    }
-    var wholeNumTest = results.every((result) => {
-        return /[1-9][0-9]*/.test(result);
-    });
-    if(!wholeNumTest) {
-        throw new Error('Results are mandatory to be an array of whole numbers');
-    }
-    if(results.length &lt; 3) {
-        throw new Error('Minimum 3 positions should be specified');
-    }
-    var uniqSet = _.uniqBy(results, _.trim);
-    if(results.length != uniqSet.length) {
-        throw new Error('Results should be uniquely positioned runners');
-    }
-}
-
-/**
- * @returns {string} Returns the runner of first position
- */
-RaceResult.prototype.getFirstPosition = function() {
-    return this.results[0];
-};
-
-/**
- * @returns {string} Returns the runner of second position
- */
-RaceResult.prototype.getSecondPosition = function() {
-    return this.results[1];
-};
-
-/**
- * @returns {string} Returns the runner of third position
- */
-RaceResult.prototype.getThirdPosition = function() {
-    return this.results[2];
-};
-
-module.exports = RaceResult;</code></pre>
+module.exports = validate;</code></pre>
         </article>
     </section>
 

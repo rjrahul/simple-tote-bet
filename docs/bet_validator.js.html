@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: race-result/index.js</title>
+    <title>JSDoc: Source: bet/validator.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: race-result/index.js</h1>
+    <h1 class="page-title">Source: bet/validator.js</h1>
 
     
 
@@ -28,70 +28,51 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-var _ = require('lodash');
-var uuidv4 = require('uuid/v4');
-
 /**
- * A class to store race results
- * 
- * @constructor
- * @param {string[]} results - Results of the race in ordered fashion 
- *                              with 0th index denoting first position
- * @throws Throws an exception if data is invalid
+ * Performs basic validations on the product, selections and stake params
+ * @param {string} product - Product type of bet should be W, P or E
+ * @param {string|string[]} selections - Selections of runners for the bet
+ * @param {string} stake - Stake for the bet
+ * @param {function} cb - Callback that will receive the error, if failed.
  */
-function RaceResult(results) {
-    validate(results);
-    this.results = results;
-    this.id = uuidv4();
+function validate(product, selections, stake, cb) {
+    if(!product || (product.trim &amp;&amp; !product.trim())) {
+        return cb(new Error('Product is mandatory'));
+    }
+    if(['W', 'P', 'E'].indexOf(product.trim()) &lt; 0) {
+        return cb(new Error('Invalid product. Use W, P or E.'));
+    }
+    if(!selections || (selections.trim &amp;&amp; !selections.trim())) {
+        return cb(new Error('Selections is mandatory'));
+    }
+    if(product.trim() === 'E' &amp;&amp; (!Array.isArray(selections) || selections.length !== 2)) {
+        return cb(new Error('Exacta bet selections must be for first and second position'));
+    }
+    
+    var selectionsArr = Array.isArray(selections) ? selections: [selections];
+    if(!isWholeNumber(selectionsArr)) {
+        return cb(new Error('Selections must be whole numbers'));
+    }
+
+    if(!stake || (stake.trim &amp;&amp; !stake.trim())) {
+        return cb(new Error('Stake is mandatory'));
+    }
+    if(!isWholeNumber([stake])) {
+        return cb(new Error('Stake needs to be a whole number greater than 0'));
+    }
+    cb();
 }
 
 /**
- * Validates that race result is an unique array of minimum 3 whole numbers
- * 
- * @param {string[]} results - Race results to validate
- * @throws Throws an exception if invalid
+ * This method tests every element of an array to be a whole number and returns
+ * false if any of the number fails the test.
+ * @param {string[]} input - Array of strings that need to be tested for whole numbers.
  */
-function validate(results) {
-    if(!Array.isArray(results)) {
-        throw new Error('Results are mandatory to be an array of whole numbers');
-    }
-    var wholeNumTest = results.every((result) => {
-        return /[1-9][0-9]*/.test(result);
+function isWholeNumber(input) {
+    return input.every((inp) => {
+        return /[1-9][0-9]*/.test(inp);
     });
-    if(!wholeNumTest) {
-        throw new Error('Results are mandatory to be an array of whole numbers');
-    }
-    if(results.length &lt; 3) {
-        throw new Error('Minimum 3 positions should be specified');
-    }
-    var uniqSet = _.uniqBy(results, _.trim);
-    if(results.length != uniqSet.length) {
-        throw new Error('Results should be uniquely positioned runners');
-    }
-}
-
-/**
- * @returns {string} Returns the runner of first position
- */
-RaceResult.prototype.getFirstPosition = function() {
-    return this.results[0];
-};
-
-/**
- * @returns {string} Returns the runner of second position
- */
-RaceResult.prototype.getSecondPosition = function() {
-    return this.results[1];
-};
-
-/**
- * @returns {string} Returns the runner of third position
- */
-RaceResult.prototype.getThirdPosition = function() {
-    return this.results[2];
-};
-
-module.exports = RaceResult;</code></pre>
+}</code></pre>
         </article>
     </section>
 

@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var validate = require('./validator');
 
 /**
  * This method calculates dividend for Place bets based on RaceResult.
@@ -39,19 +40,6 @@ function calculateDividend(result, bets, commission, cb) {
 
         cb(null, determineDividend(totalPool, firstPositionStakes, secondPositionStakes, thirdPositionStakes, commission));
     });
-}
-
-/**
- * It validates the parameters
- * @param {RaceResult} result - RaceResult object
- * @param {function} cb - Callback function
- * @throws Throws an Error if data is invalid
- */
-function validate(result, cb) {
-    if(!result) {
-        return cb(new Error('RaceResult is mandatory'));
-    }
-    cb();
 }
 
 /**
@@ -99,20 +87,6 @@ function calculateThirdPositionStakes(result, bets) {
     return bets.reduce((winStake, bet) => {
         return isThirdPositionWin(result, bet) ? winStake + bet.stake : winStake;
     }, 0);
-}
-
-/**
- * This method determines if the Place Bet has been won or not based on RaceResult.
- * A Place bet is won if the selected runner is either in first, second or third place.
- * 
- * @param {RaceResult} result - RaceResult
- * @param {PlaceBet} bet - An PlaceBet object
- * @returns {boolean} Whether a bet is won or lost
- */
-function isBetWon(result, bet) {
-    return isFirstPositionWin(result, bet)
-            || isSecondPositionWin(result, bet)
-            || isThirdPositionWin(result, bet);
 }
 
 /**
